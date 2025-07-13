@@ -10,6 +10,7 @@ export function startREPL(): void {
   });
 
   const cmds = getCommands();
+  console.log("Welcome to the Pokedex!");
 
   rl.prompt();
 
