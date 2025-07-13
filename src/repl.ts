@@ -1,5 +1,6 @@
 import { stdin, stdout } from "node:process";
 import { createInterface } from "node:readline";
+import { getCommands } from "./registry.js";
 
 export function startREPL(): void {
   const rl = createInterface({
@@ -7,6 +8,8 @@ export function startREPL(): void {
     output: stdout,
     prompt: "Pokedex > "
   });
+
+  const cmds = getCommands();
 
   rl.prompt();
 
@@ -17,7 +20,13 @@ export function startREPL(): void {
       return;
     }
 
-    console.log(`Your command was: ${clean[0]}`);
+    const cmd = clean[0];
+    if (cmds.hasOwnProperty(cmd)) {
+      cmds[cmd]["callback"](cmds);
+    } else {
+      console.log("Unknown command");
+    }
+
     rl.prompt();
   });
 }
