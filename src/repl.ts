@@ -23,5 +23,5 @@ export function startREPL(): void {
 }
 
 export function cleanInput(input: string): string[] {
-  return input.split(" ").filter(n => n.length > 0);
+  return input.toLowerCase().split(" ").filter(n => n.length > 0);
 }
