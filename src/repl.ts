@@ -1,14 +1,10 @@
-import { stdin, stdout } from "node:process";
-import { createInterface } from "node:readline";
-import { getCommands } from "./registry.js";
 import { type State } from "./state.js";
 
-await export function startREPL(state: State): void {
+export async function startREPL(state: State): Promise<void> {
   console.log("Welcome to the Pokedex!");
-
   state.rl.prompt();
 
-  state.rl.on("line", (line) => {
+  state.rl.on("line", async (line) => {
     const clean = cleanInput(line);
     if (clean.length < 1) {
       state.rl.prompt();
@@ -27,6 +23,7 @@ await export function startREPL(state: State): void {
     } catch (e) {
       console.log((e as Error).message);
     }
+
     state.rl.prompt();
   });
 }
