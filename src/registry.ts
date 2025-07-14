@@ -29,12 +29,12 @@ export function getCommands(): Record<string, CLICommand> {
       callback: commandMapBack,
     },
     explore: {
-      name: "explore",
+      name: "explore <area>",
       description: "Explore the location given",
       callback: commandExplore,
     },
     catch: {
-      name: "catch",
+      name: "catch <pokemon>",
       description: "Catch a pokemon",
       callback: commandCatch,
     },
