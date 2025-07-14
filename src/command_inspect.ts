@@ -6,7 +6,7 @@ export async function commandInspect(state: State, ...args: string[]) {
   }
 
   const name = args[0];
-  const pokemon = state.caughtPokemon[name];
+  const pokemon = state.pokedex[name];
   if (!pokemon) {
     throw new Error("you have not caught that pokemon");
   }
