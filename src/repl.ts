@@ -11,15 +11,15 @@ export async function startREPL(state: State): Promise<void> {
       return;
     }
 
-    const cmd = clean[0];
-    if (!state.commands.hasOwnProperty(cmd)) {
+    const cmd = clean.shift();
+    if (cmd === undefined || !state.commands.hasOwnProperty(cmd)) {
       console.log("Unknown command");
       state.rl.prompt();
       return;
     }
 
     try {
-      await state.commands[cmd]["callback"](state);
+      await state.commands[cmd]["callback"](state, ...clean);
     } catch (e) {
       console.log((e as Error).message);
     }
