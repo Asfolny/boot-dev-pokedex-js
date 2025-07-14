@@ -3,7 +3,7 @@ import { createInterface } from "node:readline";
 import { getCommands } from "./registry.js";
 import { type State } from "./state.js";
 
-export function startREPL(state: State): void {
+await export function startREPL(state: State): void {
   console.log("Welcome to the Pokedex!");
 
   state.rl.prompt();
@@ -16,12 +16,17 @@ export function startREPL(state: State): void {
     }
 
     const cmd = clean[0];
-    if (state.commands.hasOwnProperty(cmd)) {
-      state.commands[cmd]["callback"](state);
-    } else {
+    if (!state.commands.hasOwnProperty(cmd)) {
       console.log("Unknown command");
+      state.rl.prompt();
+      return;
     }
 
+    try {
+      await state.commands[cmd]["callback"](state);
+    } catch (e) {
+      console.log((e as Error).message);
+    }
     state.rl.prompt();
   });
 }
